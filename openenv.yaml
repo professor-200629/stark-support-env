@@ -1,0 +1,61 @@
+name: stark-support-trainer
+version: "1.0.0"
+description: >
+  Stark Support Trainer — RL environment where AI agents learn to handle
+  customer support tickets across three difficulty levels.
+
+author: Stark AI
+
+task_levels:
+  - name: easy
+    description: "Classify the customer ticket into the correct category"
+    max_steps: 1
+    reward_range: [-0.2, 1.0]
+  - name: medium
+    description: "Respond to customer with proper tone and relevance"
+    max_steps: 1
+    reward_range: [-1.0, 1.1]
+  - name: hard
+    description: "Fully resolve a support ticket across multiple steps"
+    max_steps: 8
+    reward_range: [-2.0, 2.5]
+
+observation_space:
+  customer_message: string
+  sentiment: "angry | frustrated | confused | disappointed | panicked | neutral"
+  ticket_type: string
+  history: list
+  step_count: int
+  info_gathered: dict
+
+action_space:
+  action_type: "classify_ticket | respond | request_info | escalate | investigate | verify | resolve"
+
+reward_shaping:
+  correct_classification: +1.0
+  polite_tone: +0.3
+  relevant_response: +0.5
+  all_info_gathered: +0.2
+  correct_resolution: +0.4 to +0.6
+  efficiency_bonus: +0.1
+  rude_response: -0.5
+  wrong_resolution: -0.2
+  unnecessary_steps: -0.05 per extra step
+  missing_info: -0.15 per field
+
+entry_point: "env:SupportEnv"
+inference_script: inference.py
+
+edge_cases:
+  - fraud_complaint
+  - refund_abuse
+  - unclear_message
+  - double_charge
+  - late_delivery
+
+sentiment_difficulty:
+  angry: 0.9x
+  panicked: 0.85x
+  frustrated: 0.95x
+  confused: 0.9x
+  neutral: 1.0x
