@@ -1,3 +1,9 @@
+hf:
+  title: Stark Support Env
+  emoji: 🤖
+  colorFrom: blue
+  colorTo: indigo
+
 name: stark-support-trainer
 version: "1.0.0"
 description: >

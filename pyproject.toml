@@ -1,0 +1,14 @@
+[project]
+name = "stark-support-env"
+version = "0.1.0"
+description = "Customer support simulation environment using OpenEnv"
+authors = [
+    { name="Balu" }
+]
+
+dependencies = [
+    "openai",
+    "pydantic",
+    "numpy",
+    "pyyaml"
+]
